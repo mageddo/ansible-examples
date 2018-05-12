@@ -1,4 +1,12 @@
 - hosts: local
+  # tasks are any kind of command that you can run
   tasks:
    - name: Install Nginx
      apt: pkg=nginx state=present update_cache=true
+     notify:
+      - Start Nginx
+
+  # handlers are exactly as tasks until by the fact that handlers just run when tasks made changes, if the tasks is already installed then handler will not be called
+  handlers:
+    - name: Start Nginx
+      service: name=nginx state=stopped
